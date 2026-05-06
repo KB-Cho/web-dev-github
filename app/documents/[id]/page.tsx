@@ -1,23 +1,38 @@
 import { AppShell } from "@/components/AppShell";
 import { ButtonLink } from "@/components/ButtonLink";
 import { DocumentSection } from "@/components/DocumentSection";
+import { JourneySteps } from "@/components/JourneySteps";
 import { MetricCard } from "@/components/MetricCard";
-<<<<<<< codex/create-saas-prototype-for-policypilot-vy7706
 import { PolicyDraftViewer } from "@/components/PolicyDraftViewer";
 import { SectionHeader } from "@/components/SectionHeader";
 import { assumptions, decisionQuestions, documentSections, loginProject, policyDraft, project } from "@/lib/mockData";
-=======
+
+import { MetricCard } from "@/components/MetricCard";
+import { PolicyDraftViewer } from "@/components/PolicyDraftViewer";
+import { SectionHeader } from "@/components/SectionHeader";
+import { assumptions, decisionQuestions, documentSections, loginProject, policyDraft, project } from "@/lib/mockData";
+
 import { SectionHeader } from "@/components/SectionHeader";
 import { documentSections, project } from "@/lib/mockData";
->>>>>>> main
+
 
 type DocumentPageProps = {
   params: Promise<{ id: string }>;
 };
 
+
+const journeySteps = [
+  { title: "기능 입력", description: "로그인 정책 시나리오 감지" },
+  { title: "질문 답변", description: "객관식 답변과 추가 요청 저장" },
+  { title: "초안 반영", description: "현재 단계: 답변 반영 결과 확인" },
+];
+
 export default async function DocumentPage({ params }: DocumentPageProps) {
   const { id } = await params;
-<<<<<<< codex/create-saas-prototype-for-policypilot-vy7706
+
+export default async function DocumentPage({ params }: DocumentPageProps) {
+  const { id } = await params;
+
   const isLoginProject = id === loginProject.id;
 
   if (isLoginProject) {
@@ -30,6 +45,9 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
 
     return (
       <AppShell>
+
+        <JourneySteps steps={journeySteps} currentStep={3} />
+
         <section className="rounded-[2rem] border border-white/80 bg-white/75 p-8 shadow-lg shadow-slate-200/70">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeader
@@ -58,8 +76,7 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
       </AppShell>
     );
   }
-=======
->>>>>>> main
+
 
   return (
     <AppShell>

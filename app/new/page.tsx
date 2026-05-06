@@ -1,7 +1,12 @@
 import { AppShell } from "@/components/AppShell";
+
+import { JourneySteps } from "@/components/JourneySteps";
+import { NewPolicyForm } from "@/components/NewPolicyForm";
+
 import { NewPolicyForm } from "@/components/NewPolicyForm";
 
 import { ButtonLink } from "@/components/ButtonLink";
+
 import { SectionHeader } from "@/components/SectionHeader";
 
 const guidance = [
@@ -9,6 +14,17 @@ const guidance = [
   "처리되는 데이터 종류와 외부 연동 여부",
   "출시 일정, 담당 부서, 우려되는 리스크",
 ];
+
+const journeySteps = [
+  { title: "기능 입력", description: "로그인 문장을 감지해 정책 도메인을 준비" },
+  { title: "질문 답변", description: "한 화면에 하나씩 객관식으로 진행" },
+  { title: "초안 반영", description: "답변이 문서에 반영된 결과 확인" },
+];
+
+export default function NewPolicyPage() {
+  return (
+    <AppShell>
+      <JourneySteps steps={journeySteps} currentStep={1} />
 
 export default function NewPolicyPage() {
   return (
@@ -20,7 +36,9 @@ export default function NewPolicyPage() {
             title="새 정책서 생성"
             description="기능 설명에 '고객이 로그인을 한다'를 입력하면 로그인 정책 mock 질문 흐름으로 이동합니다."
 
+
             description="아래 정보는 mock 질문과 정책서 초안을 만드는 데 사용되는 프로토타입 입력값입니다."
+
 
           />
           <div className="mt-8 space-y-4">
@@ -32,11 +50,14 @@ export default function NewPolicyPage() {
             ))}
           </div>
 
+
+
           <div className="mt-6 rounded-3xl border border-teal-100 bg-teal-50 p-5 text-sm leading-6 text-teal-900">
             예시 입력: <span className="font-black">고객이 로그인을 한다</span>
           </div>
         </aside>
         <NewPolicyForm />
+
 
         </aside>
         <form className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/70">

@@ -25,6 +25,9 @@ export function PolicyQuestionWizard({ questions, projectId }: PolicyQuestionWiz
   const progress = currentIndex + 1;
   const isLastQuestion = currentIndex === questions.length - 1;
 
+  const completedQuestionIds = new Set(savedAnswers.map((answer) => answer.questionId));
+
+
   const currentAnswer = useMemo<LoginAnswer>(() => ({
     questionId: currentQuestion.id,
     question: currentQuestion.question,
@@ -66,6 +69,52 @@ export function PolicyQuestionWizard({ questions, projectId }: PolicyQuestionWiz
   }
 
   return (
+
+    <section className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
+      <aside className="rounded-[2rem] border border-white/80 bg-white/75 p-6 shadow-lg shadow-slate-200/70">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-black text-teal-700">자동 진행 현황</p>
+            <p className="mt-1 text-xs leading-5 text-slate-500">왼쪽 목록은 클릭 영역이 아니라 현재 위치를 보여주는 안내입니다.</p>
+          </div>
+          <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-black text-teal-700">{progress}/{questions.length}</span>
+        </div>
+        <div className="mt-5 h-3 overflow-hidden rounded-full bg-slate-100">
+          <div className="h-full rounded-full bg-teal-500 transition-all" style={{ width: `${(progress / questions.length) * 100}%` }} />
+        </div>
+        <ol className="mt-6 space-y-1.5">
+          {questions.map((question, index) => {
+            const stepNumber = index + 1;
+            const isCurrent = index === currentIndex;
+            const isComplete = completedQuestionIds.has(question.id) || index < currentIndex;
+
+            return (
+              <li key={question.id} className="flex gap-3 py-2">
+                <div className="flex flex-col items-center">
+                  <span
+                    className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-black ${
+                      isCurrent ? "bg-teal-600 text-white" : isComplete ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-400"
+                    }`}
+                  >
+                    {isComplete && !isCurrent ? "✓" : stepNumber}
+                  </span>
+                  {index < questions.length - 1 ? <span className="mt-1 h-6 w-px bg-slate-200" /> : null}
+                </div>
+                <div className="min-w-0 pb-2">
+                  <p className={`text-sm font-black ${isCurrent ? "text-teal-800" : "text-slate-700"}`}>{question.category}</p>
+                  <p className="mt-0.5 text-xs leading-5 text-slate-500">{isCurrent ? "현재 답변 중" : isComplete ? "답변 저장됨" : "다음에 이어서 진행"}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      </aside>
+      <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/70">
+        <div className="rounded-3xl bg-slate-50 p-4 text-sm font-bold text-slate-600">
+          기능 입력 → 질문 답변 → 정책서 초안 반영까지 한 흐름으로 이어집니다. 선택 후 <span className="text-teal-700">다음 질문</span>만 누르면 됩니다.
+        </div>
+        <div className="mt-6 flex justify-start">
+
     <section className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
       <aside className="rounded-[2rem] border border-white/80 bg-white/75 p-6 shadow-lg shadow-slate-200/70">
         <p className="text-sm font-black text-teal-700">답변 진행률</p>
@@ -90,6 +139,7 @@ export function PolicyQuestionWizard({ questions, projectId }: PolicyQuestionWiz
       </aside>
       <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/70">
         <div className="flex justify-start">
+
           <div className="max-w-2xl rounded-[1.5rem] rounded-tl-sm bg-slate-950 p-5 text-white">
             <p className="text-xs font-black uppercase tracking-[0.25em] text-teal-300">PolicyPilot 질문 {progress}</p>
             <h2 className="mt-3 text-2xl font-black">{currentQuestion.question}</h2>
@@ -98,6 +148,34 @@ export function PolicyQuestionWizard({ questions, projectId }: PolicyQuestionWiz
         </div>
         <div className="mt-6 flex justify-end">
           <div className="w-full max-w-2xl rounded-[1.5rem] rounded-tr-sm border border-slate-200 bg-slate-50 p-5">
+
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm font-black text-slate-700">추천 안 중 가장 가까운 답을 선택해 주세요.</p>
+              <p className="text-xs font-bold text-slate-500">선택값은 다음 단계에서 자동 반영됩니다.</p>
+            </div>
+            <div className="mt-4 grid gap-3">
+              {currentQuestion.options.map((option) => {
+                const isSelected = (selectedOptions[currentQuestion.id] ?? currentQuestion.defaultAnswer) === option;
+
+                return (
+                  <label
+                    key={option}
+                    className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition ${
+                      isSelected ? "border-teal-400 bg-teal-50 shadow-sm shadow-teal-100" : "border-slate-200 bg-white hover:border-teal-300"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name={currentQuestion.id}
+                      className="mt-1 h-4 w-4 accent-teal-600"
+                      checked={isSelected}
+                      onChange={() => setSelectedOptions((previousOptions) => ({ ...previousOptions, [currentQuestion.id]: option }))}
+                    />
+                    <span className="text-sm font-bold leading-6 text-slate-800">{option}</span>
+                  </label>
+                );
+              })}
+
             <p className="text-sm font-black text-slate-700">먼저 가장 가까운 안을 선택해 주세요.</p>
             <div className="mt-4 grid gap-3">
               {currentQuestion.options.map((option) => (
@@ -112,6 +190,7 @@ export function PolicyQuestionWizard({ questions, projectId }: PolicyQuestionWiz
                   <span className="text-sm font-bold leading-6 text-slate-800">{option}</span>
                 </label>
               ))}
+
             </div>
             <label className="mt-5 block">
               <span className="text-sm font-black text-slate-700">추가 요청사항</span>
@@ -122,14 +201,24 @@ export function PolicyQuestionWizard({ questions, projectId }: PolicyQuestionWiz
                 onChange={(event) => setAdditionalRequests((previousRequests) => ({ ...previousRequests, [currentQuestion.id]: event.target.value }))}
               />
             </label>
+            <div className="mt-5 rounded-2xl bg-white p-4 text-sm leading-6 text-slate-600">
+              <span className="font-black text-slate-900">현재 반영 예정:</span> {currentAnswer.selectedOption}
+              {currentAnswer.additionalRequest ? ` / 추가 요청: ${currentAnswer.additionalRequest}` : ""}
+            </div>
+
           </div>
         </div>
         <div className="mt-6 flex flex-col justify-between gap-3 sm:flex-row">
           {currentIndex === 0 ? <ButtonLink href="/new" variant="secondary">입력으로 돌아가기</ButtonLink> : <button type="button" onClick={handlePrevious} className="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50">이전 질문</button>}
           {isLastQuestion ? (
+            <button type="button" onClick={handleCreateDraft} className="rounded-full bg-teal-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-teal-700/20 transition hover:bg-teal-700">정책서 초안에서 답변 반영 확인</button>
+          ) : (
+            <button type="button" onClick={handleNext} className="rounded-full bg-teal-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-teal-700/20 transition hover:bg-teal-700">저장하고 다음 질문</button>
+
             <button type="button" onClick={handleCreateDraft} className="rounded-full bg-teal-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-teal-700/20 transition hover:bg-teal-700">정책서 초안 생성</button>
           ) : (
             <button type="button" onClick={handleNext} className="rounded-full bg-teal-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-teal-700/20 transition hover:bg-teal-700">다음 질문</button>
+
           )}
         </div>
       </div>
