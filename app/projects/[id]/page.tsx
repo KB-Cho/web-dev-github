@@ -1,21 +1,32 @@
 import { AppShell } from "@/components/AppShell";
 import { ButtonLink } from "@/components/ButtonLink";
+
 import { JourneySteps } from "@/components/JourneySteps";
+
 import { MetricCard } from "@/components/MetricCard";
 import { PolicyQuestionWizard } from "@/components/PolicyQuestionWizard";
 import { QuestionCard } from "@/components/QuestionCard";
 import { SectionHeader } from "@/components/SectionHeader";
 import { decisionQuestions, detectedDomains, draftOutline, loginProject, policyQuestions, project } from "@/lib/mockData";
 
+
+import { QuestionCard } from "@/components/QuestionCard";
+import { SectionHeader } from "@/components/SectionHeader";
+import { policyQuestions, project } from "@/lib/mockData";
+
+
+
 type ProjectPageProps = {
   params: Promise<{ id: string }>;
 };
+
 
 const journeySteps = [
   { title: "기능 입력", description: "로그인 정책 시나리오 감지 완료" },
   { title: "질문 답변", description: "현재 단계: 객관식 선택과 추가 요청 입력" },
   { title: "초안 반영", description: "마지막 질문 후 자동으로 결과 이동" },
 ];
+
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { id } = await params;
@@ -24,7 +35,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   if (isLoginProject) {
     return (
       <AppShell>
+
         <JourneySteps steps={journeySteps} currentStep={2} />
+
         <section className="rounded-[2rem] border border-white/80 bg-white/75 p-8 shadow-lg shadow-slate-200/70">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeader

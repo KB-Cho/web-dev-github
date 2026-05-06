@@ -200,6 +200,7 @@ Vercel에서 확인할 위치:
 
 다만 코드 기준으로는 `app/page.tsx`, `app/layout.tsx`, `/new`, `/projects/[id]`, `/documents/[id]` 라우트 파일이 존재하고, `next.config.ts`에도 라우팅을 깨뜨릴 수 있는 `basePath`, `redirects`, `rewrites`, `output` 설정이 없습니다. 따라서 Vercel Preview 404는 Vercel 설정/배포 로그/Preview URL을 추가로 확인해야 합니다.
 
+
 ## Vercel Production 배포 오류: `public` Output Directory
 
 Vercel Production Build Log에 아래 오류가 표시되면, Next.js 앱 자체가 `/` 페이지를 만들지 못했다는 뜻이 아니라 **Vercel 프로젝트의 Output Directory 설정이 잘못되었을 가능성**이 큽니다.
@@ -264,6 +265,7 @@ Vercel Production의 `No Output Directory named "public" found` 오류를 해결
 
 마지막 질문에서 **정책서 초안 생성**을 누르면 `/documents/login-policy`로 이동합니다. 이 결과 화면은 브라우저의 `localStorage`에 저장된 답변을 읽어, 사용자가 선택한 객관식 답변과 추가 요청사항이 정책서 초안에 반영된 것처럼 보여줍니다.
 
+
 ## UI/UX 개선 메모: 랜딩 → 정책 생성 → 답변 반영 여정
 
 이번 프로토타입의 핵심 사용 여정은 아래처럼 끊기지 않게 이어지도록 설계했습니다.
@@ -279,3 +281,4 @@ Vercel Production의 `No Output Directory named "public" found` 오류를 해결
 질문 화면의 왼쪽 진행 목록은 사용자가 클릭해야 하는 메뉴처럼 보이지 않도록 **비클릭 진행 현황 안내**로 표현했습니다. 현재 질문, 저장된 질문, 다음 질문 상태만 보여주고, 실제 진행은 하단의 “저장하고 다음 질문” 버튼으로 이어집니다.
 
 정책서 결과 화면은 사용자가 선택한 답변과 추가 요청사항이 어떤 방식으로 초안에 반영되었는지 먼저 요약한 뒤, 아래 정책서 섹션을 보여줍니다. 이를 통해 기획자가 랜딩부터 정책 생성, 답변 반영 결과까지 한 흐름으로 확인할 수 있습니다.
+

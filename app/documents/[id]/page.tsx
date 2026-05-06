@@ -7,9 +7,19 @@ import { PolicyDraftViewer } from "@/components/PolicyDraftViewer";
 import { SectionHeader } from "@/components/SectionHeader";
 import { assumptions, decisionQuestions, documentSections, loginProject, policyDraft, project } from "@/lib/mockData";
 
+import { MetricCard } from "@/components/MetricCard";
+import { PolicyDraftViewer } from "@/components/PolicyDraftViewer";
+import { SectionHeader } from "@/components/SectionHeader";
+import { assumptions, decisionQuestions, documentSections, loginProject, policyDraft, project } from "@/lib/mockData";
+
+import { SectionHeader } from "@/components/SectionHeader";
+import { documentSections, project } from "@/lib/mockData";
+
+
 type DocumentPageProps = {
   params: Promise<{ id: string }>;
 };
+
 
 const journeySteps = [
   { title: "기능 입력", description: "로그인 정책 시나리오 감지" },
@@ -19,6 +29,10 @@ const journeySteps = [
 
 export default async function DocumentPage({ params }: DocumentPageProps) {
   const { id } = await params;
+
+export default async function DocumentPage({ params }: DocumentPageProps) {
+  const { id } = await params;
+
   const isLoginProject = id === loginProject.id;
 
   if (isLoginProject) {
@@ -31,7 +45,9 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
 
     return (
       <AppShell>
+
         <JourneySteps steps={journeySteps} currentStep={3} />
+
         <section className="rounded-[2rem] border border-white/80 bg-white/75 p-8 shadow-lg shadow-slate-200/70">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeader
@@ -60,6 +76,7 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
       </AppShell>
     );
   }
+
 
   return (
     <AppShell>

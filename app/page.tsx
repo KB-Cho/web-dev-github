@@ -1,11 +1,14 @@
 import { AppShell } from "@/components/AppShell";
 import { ButtonLink } from "@/components/ButtonLink";
+
 import { JourneySteps } from "@/components/JourneySteps";
+
 import { MetricCard } from "@/components/MetricCard";
 import { SectionHeader } from "@/components/SectionHeader";
 
 const features = [
   "기능 설명을 정책 질문으로 자동 분해",
+
   "한 번에 하나씩 객관식 질문 답변",
   "답변 반영 정책서 초안 즉시 확인",
 ];
@@ -14,6 +17,10 @@ const journeySteps = [
   { title: "기능 입력", description: "예: 고객이 로그인을 한다" },
   { title: "질문 답변", description: "클릭할 필요 없이 다음 버튼으로 순차 진행" },
   { title: "초안 반영", description: "선택 답변과 추가 요청사항을 문서에 반영" },
+
+  "보관, 권한, 리스크 항목을 구조화",
+  "답변 기반 정책서 초안을 즉시 생성",
+
 ];
 
 export default function Home() {
@@ -28,8 +35,12 @@ export default function Home() {
           />
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href="/new">정책서 만들기</ButtonLink>
+
             <ButtonLink href="/projects/login-policy" variant="secondary">
               로그인 정책 데모 바로보기
+            <ButtonLink href="/documents/pilot-001" variant="secondary">
+              샘플 정책서 보기
+
             </ButtonLink>
           </div>
           <div className="mt-10 grid gap-4 sm:grid-cols-3">
@@ -62,7 +73,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <JourneySteps steps={journeySteps} currentStep={1} />
+
     </AppShell>
   );
 }
