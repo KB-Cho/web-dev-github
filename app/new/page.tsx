@@ -1,4 +1,6 @@
 import { AppShell } from "@/components/AppShell";
+import { NewPolicyForm } from "@/components/NewPolicyForm";
+
 import { ButtonLink } from "@/components/ButtonLink";
 import { SectionHeader } from "@/components/SectionHeader";
 
@@ -16,7 +18,10 @@ export default function NewPolicyPage() {
           <SectionHeader
             eyebrow="New Policy"
             title="새 정책서 생성"
+            description="기능 설명에 '고객이 로그인을 한다'를 입력하면 로그인 정책 mock 질문 흐름으로 이동합니다."
+
             description="아래 정보는 mock 질문과 정책서 초안을 만드는 데 사용되는 프로토타입 입력값입니다."
+
           />
           <div className="mt-8 space-y-4">
             {guidance.map((item) => (
@@ -26,6 +31,13 @@ export default function NewPolicyPage() {
               </div>
             ))}
           </div>
+
+          <div className="mt-6 rounded-3xl border border-teal-100 bg-teal-50 p-5 text-sm leading-6 text-teal-900">
+            예시 입력: <span className="font-black">고객이 로그인을 한다</span>
+          </div>
+        </aside>
+        <NewPolicyForm />
+
         </aside>
         <form className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/70">
           <div className="grid gap-5 md:grid-cols-2">
@@ -57,6 +69,7 @@ export default function NewPolicyPage() {
             <ButtonLink href="/projects/pilot-001">질문 생성하기</ButtonLink>
           </div>
         </form>
+
       </section>
     </AppShell>
   );

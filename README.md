@@ -199,3 +199,69 @@ Vercel에서 확인할 위치:
 현재 첨부된 Vercel Preview 화면에서는 `404: NOT_FOUND`가 계속 표시되고 있으므로, PR Testing에는 이 이슈가 **아직 미해결 상태**라고 남겨야 합니다.
 
 다만 코드 기준으로는 `app/page.tsx`, `app/layout.tsx`, `/new`, `/projects/[id]`, `/documents/[id]` 라우트 파일이 존재하고, `next.config.ts`에도 라우팅을 깨뜨릴 수 있는 `basePath`, `redirects`, `rewrites`, `output` 설정이 없습니다. 따라서 Vercel Preview 404는 Vercel 설정/배포 로그/Preview URL을 추가로 확인해야 합니다.
+
+
+## Vercel Production 배포 오류: `public` Output Directory
+
+Vercel Production Build Log에 아래 오류가 표시되면, Next.js 앱 자체가 `/` 페이지를 만들지 못했다는 뜻이 아니라 **Vercel 프로젝트의 Output Directory 설정이 잘못되었을 가능성**이 큽니다.
+
+```text
+Error: No Output Directory named "public" found after the Build completed.
+```
+
+이 프로젝트는 Next.js 앱이므로 빌드 결과가 정적 사이트처럼 `public/` 폴더에 만들어지지 않습니다. `public/`은 이미지, favicon 같은 정적 파일을 넣는 입력 폴더에 가깝습니다. Vercel의 **Next.js Framework Preset**을 사용하면 배포 결과물 위치는 Vercel이 자동으로 처리합니다.
+
+이번 수정에서는 `vercel.json`에 꼭 필요한 최소 설정만 남겼습니다. `outputDirectory`는 직접 지정하지 않고 Vercel의 Next.js Framework Preset이 처리하게 두는 것이 더 안전합니다.
+
+```json
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build"
+}
+```
+
+Vercel 대시보드에서도 아래 설정을 함께 확인해 주세요.
+
+- **Framework Preset**: `Next.js`
+- **Build Command**: `npm run build`
+- **Output Directory**: `public`로 되어 있으면 안 됩니다. Next.js 프로젝트에서는 보통 비워 두어 Vercel의 Next.js Framework Preset이 자동으로 처리하게 하는 것이 안전합니다.
+- **Root Directory**: `package.json`이 있는 폴더
+
+비개발자 관점에서 요약하면, Vercel이 "Next.js 앱 결과물"을 자동으로 처리한 것이 아니라 "public이라는 폴더"를 배포 결과물로 찾고 있어서 실패한 상황입니다. 그래서 Vercel 설정을 Next.js 기준으로 맞추되, Output Directory는 직접 지정하지 않도록 정리했습니다.
+
+## PR Testing에 남길 Production 배포 상태
+
+Vercel Production의 `No Output Directory named "public" found` 오류를 해결하기 위해 `vercel.json`에는 Next.js Framework Preset과 Build Command만 남겼지만, 실제 Production 배포 성공 여부는 Vercel에서 다시 배포해 확인해야 합니다.
+
+현재 Codex 실행 환경에서는 npm registry 접근이 프록시로 차단되어 `npm install` 및 `npm run build`를 끝까지 검증할 수 없으므로, Vercel Production 또는 로컬 네트워크에서 재배포/재빌드 확인이 필요합니다.
+
+## 로그인 정책 mock 시나리오
+
+`/new` 화면의 기능 설명에 아래 문장을 입력하면 로그인 정책 전용 mock 흐름으로 이동합니다.
+
+```text
+고객이 로그인을 한다
+```
+
+이 경우 PolicyPilot은 실제 AI API를 호출하지 않고, 미리 준비된 mock 데이터로 아래 결과를 보여줍니다.
+
+- `detectedDomains`: 인증, 계정 보안, 세션 관리, 회원 상태, 로그/감사
+- `decisionQuestions`: 로그인 정책을 결정하기 위한 객관식 질문 목록
+- `draftOutline`: 결과 정책서의 목차 초안
+- `assumptions`: mock 결과를 만들 때 사용한 가정
+- `policyDraft`: 로그인 정책서 초안
+
+질문 화면은 고객이 많이 고민하지 않아도 되도록 **한 화면에 하나의 질문만** 보여주며, 채팅처럼 PolicyPilot 질문과 사용자 답변 영역을 나누어 표시합니다. 각 질문은 먼저 객관식 안을 제시하고, 필요하면 사용자가 추가 요청사항을 입력할 수 있습니다.
+
+포함된 로그인 정책 질문은 다음과 같습니다.
+
+1. 어떤 로그인 수단을 지원하나요?
+2. 간편로그인은 어떤 제공자를 지원하나요?
+3. 로그인 실패 횟수 제한이 있나요?
+4. 자동 로그인을 지원하나요?
+5. 탈퇴 회원이 로그인하면 어떻게 처리하나요?
+6. 휴면 회원 정책이 있나요?
+7. 로그인 이벤트 로그를 수집하나요?
+
+마지막 질문에서 **정책서 초안 생성**을 누르면 `/documents/login-policy`로 이동합니다. 이 결과 화면은 브라우저의 `localStorage`에 저장된 답변을 읽어, 사용자가 선택한 객관식 답변과 추가 요청사항이 정책서 초안에 반영된 것처럼 보여줍니다.
+

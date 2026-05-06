@@ -2,8 +2,14 @@ import { AppShell } from "@/components/AppShell";
 import { ButtonLink } from "@/components/ButtonLink";
 import { DocumentSection } from "@/components/DocumentSection";
 import { MetricCard } from "@/components/MetricCard";
+<<<<<<< codex/create-saas-prototype-for-policypilot-vy7706
+import { PolicyDraftViewer } from "@/components/PolicyDraftViewer";
+import { SectionHeader } from "@/components/SectionHeader";
+import { assumptions, decisionQuestions, documentSections, loginProject, policyDraft, project } from "@/lib/mockData";
+=======
 import { SectionHeader } from "@/components/SectionHeader";
 import { documentSections, project } from "@/lib/mockData";
+>>>>>>> main
 
 type DocumentPageProps = {
   params: Promise<{ id: string }>;
@@ -11,6 +17,49 @@ type DocumentPageProps = {
 
 export default async function DocumentPage({ params }: DocumentPageProps) {
   const { id } = await params;
+<<<<<<< codex/create-saas-prototype-for-policypilot-vy7706
+  const isLoginProject = id === loginProject.id;
+
+  if (isLoginProject) {
+    const fallbackAnswers = decisionQuestions.map((question) => ({
+      questionId: question.id,
+      question: question.question,
+      selectedOption: question.defaultAnswer,
+      additionalRequest: "",
+    }));
+
+    return (
+      <AppShell>
+        <section className="rounded-[2rem] border border-white/80 bg-white/75 p-8 shadow-lg shadow-slate-200/70">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <SectionHeader
+              eyebrow={`Document ${id}`}
+              title="로그인 정책서 초안"
+              description="질문별 객관식 답변과 추가 요청사항이 정책서에 반영된 것처럼 보여주는 mock 결과 화면입니다."
+            />
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <ButtonLink href={`/projects/${id}`} variant="secondary">질문으로 돌아가기</ButtonLink>
+              <ButtonLink href="/new">새 정책서 만들기</ButtonLink>
+            </div>
+          </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            <MetricCard label="회사" value={loginProject.companyName} description="정책 적용 조직" />
+            <MetricCard label="문서 상태" value="초안" description="법무/보안 검토 전 단계" />
+            <MetricCard label="답변" value={`${decisionQuestions.length}개`} description="정책서 반영 mock" />
+          </div>
+          <div className="mt-8 rounded-3xl bg-white p-5">
+            <p className="text-sm font-black text-slate-950">assumptions</p>
+            <ul className="mt-3 grid gap-2 text-sm leading-6 text-slate-600">
+              {assumptions.map((assumption) => <li key={assumption}>• {assumption}</li>)}
+            </ul>
+          </div>
+        </section>
+        <PolicyDraftViewer draft={policyDraft} fallbackAnswers={fallbackAnswers} />
+      </AppShell>
+    );
+  }
+=======
+>>>>>>> main
 
   return (
     <AppShell>
