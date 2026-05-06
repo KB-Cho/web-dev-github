@@ -179,7 +179,6 @@ export const policyDraft: LoginPolicyDraft = {
     },
   ],
 };
-
 export const policyQuestions: PolicyQuestion[] = [
   {
     id: "q1",

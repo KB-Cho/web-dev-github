@@ -2,9 +2,14 @@ import { AppShell } from "@/components/AppShell";
 import { ButtonLink } from "@/components/ButtonLink";
 import { DocumentSection } from "@/components/DocumentSection";
 import { MetricCard } from "@/components/MetricCard";
+<<<<<<< codex/create-saas-prototype-for-policypilot-vy7706
 import { PolicyDraftViewer } from "@/components/PolicyDraftViewer";
 import { SectionHeader } from "@/components/SectionHeader";
 import { assumptions, decisionQuestions, documentSections, loginProject, policyDraft, project } from "@/lib/mockData";
+=======
+import { SectionHeader } from "@/components/SectionHeader";
+import { documentSections, project } from "@/lib/mockData";
+>>>>>>> main
 
 type DocumentPageProps = {
   params: Promise<{ id: string }>;
@@ -12,6 +17,7 @@ type DocumentPageProps = {
 
 export default async function DocumentPage({ params }: DocumentPageProps) {
   const { id } = await params;
+<<<<<<< codex/create-saas-prototype-for-policypilot-vy7706
   const isLoginProject = id === loginProject.id;
 
   if (isLoginProject) {
@@ -52,6 +58,8 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
       </AppShell>
     );
   }
+=======
+>>>>>>> main
 
   return (
     <AppShell>

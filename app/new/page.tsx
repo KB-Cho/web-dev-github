@@ -1,5 +1,7 @@
 import { AppShell } from "@/components/AppShell";
 import { NewPolicyForm } from "@/components/NewPolicyForm";
+
+import { ButtonLink } from "@/components/ButtonLink";
 import { SectionHeader } from "@/components/SectionHeader";
 
 const guidance = [
@@ -17,6 +19,9 @@ export default function NewPolicyPage() {
             eyebrow="New Policy"
             title="새 정책서 생성"
             description="기능 설명에 '고객이 로그인을 한다'를 입력하면 로그인 정책 mock 질문 흐름으로 이동합니다."
+
+            description="아래 정보는 mock 질문과 정책서 초안을 만드는 데 사용되는 프로토타입 입력값입니다."
+
           />
           <div className="mt-8 space-y-4">
             {guidance.map((item) => (
@@ -26,11 +31,45 @@ export default function NewPolicyPage() {
               </div>
             ))}
           </div>
+
           <div className="mt-6 rounded-3xl border border-teal-100 bg-teal-50 p-5 text-sm leading-6 text-teal-900">
             예시 입력: <span className="font-black">고객이 로그인을 한다</span>
           </div>
         </aside>
         <NewPolicyForm />
+
+        </aside>
+        <form className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/70">
+          <div className="grid gap-5 md:grid-cols-2">
+            <label className="block">
+              <span className="text-sm font-bold text-slate-700">회사명</span>
+              <input className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-500/10" defaultValue="Acme Cloud" />
+            </label>
+            <label className="block">
+              <span className="text-sm font-bold text-slate-700">담당 팀</span>
+              <input className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-500/10" defaultValue="Product Operations" />
+            </label>
+          </div>
+          <label className="mt-5 block">
+            <span className="text-sm font-bold text-slate-700">기능명</span>
+            <input className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-500/10" defaultValue="고객 지원 대화 요약 기능" />
+          </label>
+          <label className="mt-5 block">
+            <span className="text-sm font-bold text-slate-700">기능 설명</span>
+            <textarea
+              className="mt-2 min-h-52 w-full resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 leading-7 outline-none transition focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-500/10"
+              defaultValue="상담원이 고객 문의 티켓을 빠르게 파악할 수 있도록 AI가 대화 내용을 요약하고 다음 액션을 제안합니다. 요약은 내부 상담 화면에만 표시됩니다."
+            />
+          </label>
+          <div className="mt-8 flex flex-col items-start justify-between gap-4 rounded-3xl bg-slate-50 p-5 sm:flex-row sm:items-center">
+            <div>
+              <p className="font-black text-slate-950">Mock 모드로 질문 생성</p>
+              <p className="mt-1 text-sm text-slate-500">제출 버튼은 샘플 프로젝트 질문 화면으로 이동합니다.</p>
+            </div>
+            <ButtonLink href="/projects/pilot-001">질문 생성하기</ButtonLink>
+          </div>
+        </form>
+
       </section>
     </AppShell>
   );

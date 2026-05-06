@@ -200,6 +200,7 @@ Vercel에서 확인할 위치:
 
 다만 코드 기준으로는 `app/page.tsx`, `app/layout.tsx`, `/new`, `/projects/[id]`, `/documents/[id]` 라우트 파일이 존재하고, `next.config.ts`에도 라우팅을 깨뜨릴 수 있는 `basePath`, `redirects`, `rewrites`, `output` 설정이 없습니다. 따라서 Vercel Preview 404는 Vercel 설정/배포 로그/Preview URL을 추가로 확인해야 합니다.
 
+
 ## Vercel Production 배포 오류: `public` Output Directory
 
 Vercel Production Build Log에 아래 오류가 표시되면, Next.js 앱 자체가 `/` 페이지를 만들지 못했다는 뜻이 아니라 **Vercel 프로젝트의 Output Directory 설정이 잘못되었을 가능성**이 큽니다.
@@ -263,3 +264,4 @@ Vercel Production의 `No Output Directory named "public" found` 오류를 해결
 7. 로그인 이벤트 로그를 수집하나요?
 
 마지막 질문에서 **정책서 초안 생성**을 누르면 `/documents/login-policy`로 이동합니다. 이 결과 화면은 브라우저의 `localStorage`에 저장된 답변을 읽어, 사용자가 선택한 객관식 답변과 추가 요청사항이 정책서 초안에 반영된 것처럼 보여줍니다.
+

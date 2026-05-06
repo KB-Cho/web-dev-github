@@ -6,6 +6,11 @@ import { QuestionCard } from "@/components/QuestionCard";
 import { SectionHeader } from "@/components/SectionHeader";
 import { decisionQuestions, detectedDomains, draftOutline, loginProject, policyQuestions, project } from "@/lib/mockData";
 
+import { QuestionCard } from "@/components/QuestionCard";
+import { SectionHeader } from "@/components/SectionHeader";
+import { policyQuestions, project } from "@/lib/mockData";
+
+
 type ProjectPageProps = {
   params: Promise<{ id: string }>;
 };
